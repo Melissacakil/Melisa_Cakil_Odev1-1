@@ -1,19 +1,11 @@
-/**
- * groupByCustom diye bir metod yazılacak.
- * array prototipe eklenecek tüm arraylarde çalışsın diye.
- * parametre olarak bir fonksiyon alacak bu metod.
- * parametre olarak aldığı fonksiyonun parametre konteksinde array item olacak.
- * return ettiği değere göre gruplanacak
- * (örneğin :people.groupByCustom( (item)=>item.name[0] ) dediğimde name fieldinin baş harfine göre gruplama yapacak)
- * (örneğin :people.groupByCustom( (item)=>item.age ) dediğimde age fielde göre gruplama yapacak)
- * 
- */
 
-//İpucu 1: Array.prototype.groupByCustom =  dedikten sonra metodunuzu yazabilirsiniz
-
-//örnek array
 
 const array = [
+
+    {
+        "name": "Melisa Cakil",
+        "gender": "f"
+    },
     {
         "name": "Marge Simpson",
         "gender": "f"
@@ -212,7 +204,6 @@ const array = [
     },
     {
         "name": "Rod Flanders",
-        "gender": "m"
     },
     {
         "name": "Manager",
@@ -238,22 +229,27 @@ const array = [
         "name": "Gulliver Dark",
         "gender": "m"
     },
-]
+];
 
-//örnek çıktı array.groupByCustom(item=>item.gender) için
-/*
-    {
-        "m": [... gender m olan içerik]
-        "f": [... gender f olan içerik]
-    }
- */
 
-    //örnek çıktı array.groupByCustom(item=>item.name[0]) için
-/*
-    {
-        "A": [... name baş harfi A olan içerik]
-        "B": [... name baş harfi B olan içerik]
-        "C": [... name baş harfi C olan içerik]
-        ... devamı
-    }
- */
+Array.prototype.groupByCustom = function (item) {
+
+    const groupedBy = this.map(item);
+    const grouped = this.reduce((accValue, curIndex, idx) => {
+
+        let key = groupedBy[idx];
+        if (!accValue[key]) {
+            accValue[key] = [];
+        }
+        accValue[key].push(curIndex);
+        return accValue;
+    }, {});
+    console.log(grouped);
+
+}
+
+array.groupByCustom((item) => item.gender);
+array.groupByCustom((item) => item.name[0]);
+
+
+
